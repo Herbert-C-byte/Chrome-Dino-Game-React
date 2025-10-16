@@ -1,17 +1,12 @@
-import './App.css'
-import Cactus from './Cactus'
-import Dino from './Dino'
+import Layout from './Layout'
+
+
 
 function App() {
 
-  function isRunning() {
-    return true
-  }
-
   return (
     <>
-      <Dino />
-      <Cactus />
+      <Layout />
     </>
   )
 }
