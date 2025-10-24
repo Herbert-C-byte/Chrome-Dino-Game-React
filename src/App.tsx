@@ -8,8 +8,6 @@ function App() {
 
   return (
     <>
-    <h1>Hi</h1>
-    <div className="location">Hello world</div>
       <Layout>
         <Dino />
         <Cactus />

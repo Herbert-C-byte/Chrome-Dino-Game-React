@@ -1,7 +1,7 @@
 export default function Dino() {
   return (
     <div className="dino">
-       Hello
+    <img src="" alt="" />
     </div>
   );
 }
