@@ -3,16 +3,18 @@ import { useState, useEffect, useRef } from 'react';
 export default function Dino() {
   const [position, setPosition] = useState(0);
   const [isJumping, setIsJumping] = useState(false);
-  const isJumpingRef = useRef(false);
+  const positionRef = useRef(0);
   const velocity = useRef(0);
-  const gravity = -1.2;
-  const jumpForce = 18;
+  const isJumpingRef = useRef(false);
+  const gravity = -1.4;
+  const jumpForce = 16;
   const groundLevel = 0;
-  const maxHeight = 80;
+  
 
-   useEffect(() => {
-    isJumpingRef.current = isJumping;
-  }, [isJumping]);
+  // keep refs in sync with state (just to read current values from RAF)
+  useEffect(() => { positionRef.current = position; }, [position]);
+  useEffect(() => { isJumpingRef.current = isJumping; }, [isJumping]);
+
   
   //handling the jump
    useEffect(() => {
@@ -29,33 +31,37 @@ export default function Dino() {
   }, [isJumping]);
   
   
-  //game loop
   useEffect(() => {
-    const gameLoop = setInterval(() => {
-      setPosition(previousPosition => {
-        let next = previousPosition + velocity.current
-        velocity.current += gravity
+    let rafID = 0;
 
-        if (next <= groundLevel) {
-          next = groundLevel;
-          velocity.current = 0;
-          setIsJumping(false)
-        } else if (next >= maxHeight) {
-          next = maxHeight;
-          velocity.current = gravity;
+    const step = () => {
+      const next = positionRef.current + velocity.current;
+      velocity.current += gravity;
+
+      if (next <= groundLevel) {
+        positionRef.current = groundLevel;
+        velocity.current = 0;
+        if (isJumpingRef.current) {
+          isJumpingRef.current = false;
+          setIsJumping(false);
         }
+        setPosition(groundLevel);
+      } else {
+        positionRef.current = next;
+        setPosition(next);
+      }
 
-        return next;
-      })
-    }, 16)
+      rafID = requestAnimationFrame(step);
+    };
 
-    return () => clearInterval(gameLoop);
+    rafID = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafID);
   }, []);
 
   return (
-    <div 
-      className="absolute left-10" 
-      style={{bottom: `${position}px` }}>
+    <div
+      className="absolute left-10"
+      style={{ bottom: `${position}px` }}>
     <img src="src/assets/dino-idle.png" alt="Dino Idle" className='w-12'/>
     </div>
   );
