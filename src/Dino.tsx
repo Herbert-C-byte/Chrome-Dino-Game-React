@@ -6,8 +6,8 @@ export default function Dino() {
   const positionRef = useRef(0);
   const velocity = useRef(0);
   const isJumpingRef = useRef(false);
-  const gravity = -1.4;
-  const jumpForce = 16;
+  const gravity = -1.2;
+  const jumpForce = 14;
   const groundLevel = 0;
   
 
