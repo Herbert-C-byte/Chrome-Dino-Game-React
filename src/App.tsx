@@ -20,9 +20,9 @@ function App() {
         const cactusRect = cactusRef.current.getBoundingClientRect();
 
         if (
-          dinoRect.left < cactusRect.right &&
-          dinoRect.right > cactusRect.left &&
-          dinoRect.bottom > cactusRect.top
+          dinoRect.right === cactusRect.left &&
+          dinoRect.left > cactusRect.right &&
+          dinoRect.bottom === cactusRect.top
         ) {
           setGameOver(true);
         }
@@ -40,7 +40,7 @@ function App() {
     <>
       <div className='flex flex-col mt-10'>
         <p className='mb-2 text-lg font-bold'>
-          {gameOver ? `Game Over! Final Score: ${score}` : `Score: ${score}`}
+          {gameOver ? `Game Over! Final Score bro: ${score}` : `Score: ${score}`}
         </p>
         <Layout>
           <div ref={dinoRef}>
