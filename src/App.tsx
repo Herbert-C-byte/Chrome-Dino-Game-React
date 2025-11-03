@@ -40,7 +40,7 @@ function App() {
     <>
       <div className='flex flex-col mt-10'>
         <p className='mb-2 text-lg font-bold'>
-          {gameOver ? `Game Over! Final Score bro: ${score}` : `Score: ${score}`}
+          {gameOver ? `Game Over! Final Score: ${score}` : `Score: ${score}`}
         </p>
         <Layout>
           <div ref={dinoRef}>
